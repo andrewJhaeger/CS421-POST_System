@@ -15,5 +15,6 @@ public class POSTSystem {
    */
   public static void main(String[] args) {
     InitialDisplay temp = new InitialDisplay();
+    NewSaleDisplay temp2 = new NewSaleDisplay();
   }
 }
