@@ -1,11 +1,11 @@
 package POSTSystem;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
 public class NewSaleDisplay {
-
   private JFrame window = new JFrame();
   private JPanel mainPanel = new JPanel();
   private JPanel topPanel = new JPanel();
@@ -18,7 +18,8 @@ public class NewSaleDisplay {
 
   private JLabel date = new JLabel("Date: ");
   private JLabel time = new JLabel("Time: ");
-  private JTextArea saleInfo = new JTextArea();
+  private JTextArea info = new JTextArea();
+  private JScrollPane saleInfo = new JScrollPane(info, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
   private JLabel itemLabel = new JLabel("Item Code: ");
   private JTextField itemCode = new JTextField();
   private JLabel quantityLabel = new JLabel("   Quantity: ");
@@ -28,10 +29,14 @@ public class NewSaleDisplay {
   private JButton clearItem = new JButton("Clear Item");
   private JButton cancelSale = new JButton("Cancel Item");
 
-  public NewSaleDisplay() {
+  private JFrame fromWindow;
+  
+  public NewSaleDisplay(JFrame from) {
+    fromWindow = from;
     setLayouts();
     addElements();
     displayWindow();
+    bindButtons();
   }
   
   private void setLayouts() {
@@ -78,7 +83,70 @@ public class NewSaleDisplay {
     window.setSize(400, 500);
     window.setTitle("New Sale");
     window.setLocationRelativeTo(null);
-    window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    
+    window.addWindowListener(new WindowListener() {
+      @Override
+      public void windowClosing(WindowEvent e) {
+        window.dispose();
+        fromWindow.setVisible(true);
+      }
+
+      @Override
+      public void windowOpened(WindowEvent e) {
+      }
+
+      @Override
+      public void windowClosed(WindowEvent e) {
+      }
+
+      @Override
+      public void windowIconified(WindowEvent e) {
+      }
+
+      @Override
+      public void windowDeiconified(WindowEvent e) {
+      }
+
+      @Override
+      public void windowActivated(WindowEvent e) {
+      }
+
+      @Override
+      public void windowDeactivated(WindowEvent e) {
+      }
+    });
+    
     window.setVisible(true);
+  }
+  
+  private void bindButtons() {
+    addItem.addActionListener(new ActionListener(){
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        
+      }
+    });
+    
+    calcTotal.addActionListener(new ActionListener(){
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        
+      }
+    });
+    
+    clearItem.addActionListener(new ActionListener(){
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        
+      }
+    });
+    
+    cancelSale.addActionListener(new ActionListener(){
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        
+      }
+    });
   }
 }

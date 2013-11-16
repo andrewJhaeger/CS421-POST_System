@@ -1,20 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package POSTSystem;
 
-/**
- *
- * @author Andrew Haeger
- */
 public class POSTSystem {
 
-  /**
-   * @param args the command line arguments
-   */
   public static void main(String[] args) {
     InitialDisplay temp = new InitialDisplay();
-    NewSaleDisplay temp2 = new NewSaleDisplay();
   }
 }

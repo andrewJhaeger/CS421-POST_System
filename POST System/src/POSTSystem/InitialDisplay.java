@@ -1,6 +1,7 @@
 package POSTSystem;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -19,6 +20,7 @@ public class InitialDisplay {
     setLayouts();
     addElements();
     displayWindow();
+    bindButtons();
   }
   
   private void setLayouts() {
@@ -47,5 +49,31 @@ public class InitialDisplay {
     window.setLocationRelativeTo(null);
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     window.setVisible(true);
+  }
+  
+  private void bindButtons() {
+    newSale.addActionListener(new ActionListener(){
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        NewSaleDisplay temp2 = new NewSaleDisplay(window);
+        window.setVisible(false);
+      }
+    });
+    
+    returnItem.addActionListener(new ActionListener(){
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        ReturnItemDisplay temp3 = new ReturnItemDisplay(window);
+        window.setVisible(false);
+      }
+    });
+    
+    salesReport.addActionListener(new ActionListener(){
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        SalesReportDisplay temp4 = new SalesReportDisplay(window);
+        window.setVisible(false);
+      }
+    });
   }
 }
