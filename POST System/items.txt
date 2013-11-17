@@ -1,0 +1,20 @@
+100,hot dog,1.25
+101,4 hour energy,3.98
+102,power bar,1.79
+103,gum,0.45
+104,soda,1.29
+105,orange juice,1.39
+106,bottle_water,0.89
+107,popcorn,1.50
+108,pretzel,2.35
+109,pizza,5.00
+110,chips,0.99
+111,candy bar,1.25
+112,gatorade,1.49
+113,taco,1.79
+114,ice cream,2.59
+115,beef jerky,2.99
+116,lemonade,1.99
+117,popsicle,1,80
+118,apple,0.79
+119,energy drink,2.55
