@@ -10,6 +10,10 @@ public class Money {
         value = new BigDecimal(inValue);
     }
     
+    public Money(Money inMoney) {
+        value = inMoney.bigDecValue();
+    }
+    
     public void add(Money value2) {
         value = value.add(value2.bigDecValue());
     }
@@ -19,8 +23,10 @@ public class Money {
     }
     
     public void multiply(int multiple) {
+        System.out.println(stringValue());
         BigDecimal bdMultiple = new BigDecimal(Integer.toString(multiple));
         value = value.multiply(bdMultiple);
+        System.out.println(stringValue());
     }
     
     public void divide(int divisor) {
