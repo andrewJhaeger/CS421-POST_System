@@ -18,12 +18,14 @@ public class Money {
         value = value.subtract(value2.bigDecValue());
     }
     
-    public void multiply(Money value2) {
-        value = value.multiply(value2.bigDecValue());
+    public void multiply(int multiple) {
+        BigDecimal bdMultiple = new BigDecimal(Integer.toString(multiple));
+        value = value.multiply(bdMultiple);
     }
     
-    public void divide(Money value2) {
-        value = value.divide(value2.bigDecValue());
+    public void divide(int divisor) {
+        BigDecimal bdDivisor = new BigDecimal(Integer.toString(divisor));
+        value = value.divide(bdDivisor);
     }
     
     public BigDecimal bigDecValue() {

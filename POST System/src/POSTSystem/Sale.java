@@ -25,7 +25,15 @@ public class Sale {
     public void makePayment() {
     }
     
+    public Calendar getDate() {
+        return calendar;
+    }
+    
     public Money getTotal() {
         return total;
+    }
+    
+    public SalesLineItem getLastItem() {
+        return lineItems.get(lineItems.size() - 1);
     }
 }

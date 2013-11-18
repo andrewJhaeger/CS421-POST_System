@@ -1,11 +1,16 @@
 package POSTSystem;
 
+import java.util.*;
+import java.text.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
 public class NewSaleDisplay {
+  private Register register;
+  
   private JFrame window = new JFrame();
   private JPanel mainPanel = new JPanel();
   private JPanel topPanel = new JPanel();
@@ -94,6 +99,17 @@ public class NewSaleDisplay {
 
       @Override
       public void windowOpened(WindowEvent e) {
+          info.setEditable(false);
+          
+          register = new Register();
+          register.makeNewSale();
+          
+          Calendar calendar = register.getDate();
+          SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
+          SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
+          
+         date.setText("Date: " + dateFormat.format(calendar.getTime()));
+         time.setText("Time: " + timeFormat.format(calendar.getTime()));
       }
 
       @Override
@@ -124,7 +140,13 @@ public class NewSaleDisplay {
     addItem.addActionListener(new ActionListener(){
       @Override
       public void actionPerformed(ActionEvent e) {
-        
+          try {
+              register.enterItem(Integer.parseInt(itemCode.getText()), Integer.parseInt(quantity.getText()));
+              info.append(register.getLineItemDisplay());
+          }
+          catch(Exception ex) {
+              JOptionPane.showMessageDialog(null, "Invalid Item!");
+          }
       }
     });
     

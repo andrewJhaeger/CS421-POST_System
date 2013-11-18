@@ -1,7 +1,7 @@
 package POSTSystem;
 
 public class ProductSpecification {
-    public int itemID;
+    private int itemID;
     private String description;
     private Money price;
     
