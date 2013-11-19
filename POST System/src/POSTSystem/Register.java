@@ -19,8 +19,6 @@ public class Register {
     
     public void makeNewSale() {
         sale = new Sale();
-        catalog = new ProductCatalog();
-        catalog.addItemsFromFile("items.txt");
         receipt = new ArrayList<>();
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy hh:mm a");

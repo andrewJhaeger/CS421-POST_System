@@ -1,0 +1,15 @@
+Receipt No. 4                11/19/13 04:00 PM
+
+Item ID    Description     Quantity   Cost      
+-------    -----------     --------   ----      
+106        bottle_water    9          $8.01     
+103        gum             6          $2.70     
+113        taco            7          $12.53    
+116        lemonade        5          $9.95     
+---------------------------------------------
+                             Subtotal: $33.19
+                              Tax (6%): $1.99
+                                Total: $35.18
+                      Tendered Amount: $40.00
+                                Change: $4.82
+                                   Thank You!
