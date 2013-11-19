@@ -22,11 +22,9 @@ public class Money {
         value = value.subtract(value2.bigDecValue());
     }
     
-    public void multiply(int multiple) {
-        System.out.println(stringValue());
-        BigDecimal bdMultiple = new BigDecimal(Integer.toString(multiple));
+    public void multiply(double multiple) {
+        BigDecimal bdMultiple = new BigDecimal(Double.toString(multiple));
         value = value.multiply(bdMultiple);
-        System.out.println(stringValue());
     }
     
     public void divide(int divisor) {

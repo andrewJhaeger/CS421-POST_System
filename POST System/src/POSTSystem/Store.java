@@ -1,13 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package POSTSystem;
 
-/**
- *
- * @author Andrew Haeger
- */
 public class Store {
-  
+    private ProductCatalog catalog = new ProductCatalog();
+    private Register register = new Register(catalog);
+
+    public Store() {
+        catalog.addItemsFromFile("items.txt");
+    }
+    
+    public Register getRegister() { 
+        return register; 
+    }
 }

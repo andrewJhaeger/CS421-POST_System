@@ -1,0 +1,15 @@
+Receipt No. 2                11/19/13 12:19 AM
+
+Item ID    Description     Quantity   Cost      
+-------    -----------     --------   ----      
+106        bottle_water    7          $6.23     
+109        pizza           6          $30.00    
+111        candy bar       2          $2.50     
+116        lemonade        7          $13.93    
+---------------------------------------------
+                             Subtotal: $52.66
+                              Tax (6%): $3.16
+                                Total: $55.82
+                      Tendered Amount: $60.55
+                                Change: $4.73
+                                   Thank You!

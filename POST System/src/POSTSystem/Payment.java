@@ -1,13 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package POSTSystem;
 
-/**
- *
- * @author Andrew Haeger
- */
 public class Payment {
-  
+    private Money amount;
+    
+    public Payment(Money tenderedAmt) {
+        amount = tenderedAmt;
+    }
+    
+    public Money getAmount() {
+        return amount;
+    }
 }

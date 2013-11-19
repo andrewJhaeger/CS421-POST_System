@@ -9,9 +9,14 @@ public class SalesLineItem {
         spec = inSpec;
         quantity = inQuantity;
         subTotal = new Money(spec.getPrice());
-        subTotal.multiply(quantity);
+        subTotal.multiply((double)quantity);
     }
     
+    public void addQuantity(int inQuantity) {
+        quantity += inQuantity;
+        subTotal = new Money(spec.getPrice());
+        subTotal.multiply((double)quantity);
+    }
     public ProductSpecification getSpec() {
         return spec;
     }

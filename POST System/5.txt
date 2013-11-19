@@ -1,0 +1,11 @@
+Receipt No. 5                11/18/13 10:25 PM
+
+Item ID    Description     Quantity   Cost      
+-------    -----------     --------   ----      
+105        orange juice    3          $4.17     
+108        pretzel         5          $11.75    
+101        4 hour energy   1          $3.98     
+---------------------------------------------
+                             Subtotal: $19.90
+                              Tax (6%): $1.19
+                                Total: $21.09
