@@ -39,10 +39,4 @@ public class ProductCatalog {
         }
         throw new IllegalArgumentException(String.format("Item with id %d not found in catalog", itemID));
     }
-    
-    public void print() {
-        for(ProductSpecification spec : catalog) {
-            System.out.printf("ID: %d Description: %s Price: %s\n", spec.getID(), spec.getDescription(), spec.getPrice().stringValue());
-        }
-    }
 }
