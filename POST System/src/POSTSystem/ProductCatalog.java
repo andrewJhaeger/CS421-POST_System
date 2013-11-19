@@ -4,7 +4,7 @@ import java.util.*;
 import java.io.*;
 
 public class ProductCatalog {
-    public List<ProductSpecification> catalog;
+    private List<ProductSpecification> catalog;
     
     public ProductCatalog() {
         catalog = new ArrayList<>();
