@@ -2,6 +2,9 @@ package POSTSystem;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -71,6 +74,8 @@ public class SalesReportDisplay {
 
             @Override
             public void windowOpened(WindowEvent e) {
+              info.setEditable(false);
+              info.setFont(new Font("Courier New", Font.PLAIN, 12));
             }
 
             @Override
@@ -101,8 +106,25 @@ public class SalesReportDisplay {
         runReport.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if (register.isValidDate(date.getText()) == false)
+                    JOptionPane.showMessageDialog(null, "Invalid date format or date, use MM-dd-yy!");
+                else
+                    try {
+                        register.printSalesReport(date.getText());
+                        printReceipt();
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, "Error while reading receipts!");
+                    }
+                    
             }
         });
+    }
+    
+     public void printReceipt() {
+        info.setText("");
+        for(String line : register.getReceipt()) {
+            info.append(line);
+            info.append("\n");
+        }
     }
 }

@@ -11,4 +11,5 @@ public class Store {
     public Register getRegister() { 
         return register; 
     }
+    
 }

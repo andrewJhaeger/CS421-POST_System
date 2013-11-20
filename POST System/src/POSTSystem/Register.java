@@ -3,6 +3,8 @@ package POSTSystem;
 import java.util.*;
 import java.text.*;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Register {
     private Sale sale;
@@ -137,5 +139,65 @@ public class Register {
             System.out.println("An error occured recording the sale");
             ex.printStackTrace(System.out);
         }
+    }
+    
+    public boolean isValidDate(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yy");
+        
+        Date testDate;
+        try {
+            testDate = sdf.parse(date);
+        }
+        catch (ParseException e) {
+            return false;
+        }
+        
+        if (!sdf.format(testDate).equals(date))
+        {
+            return false;
+        }
+        return true;
+    }
+    
+    public void printSalesReport(String date) throws IOException {
+        makeDailyReport(date);
+        File dir = new File ("receipts/" + date + "/");
+        if (dir.isDirectory()) {            
+           for (File receipts : dir.listFiles()) {
+               readFromReceipt(receipts);
+           }
+        }
+        endSale();
+    }
+    
+    public void readFromReceipt(File receipt) throws FileNotFoundException, IOException {
+        Scanner fileScanner = new Scanner(new BufferedReader(new FileReader(receipt)));
+        int itemNum;
+        int quantity;
+        
+        for (int i = 0; i < 4; i++) {
+            fileScanner.nextLine();
+        }
+        
+        while (!fileScanner.hasNext("---------------------------------------------")) {
+          itemNum = Integer.parseInt(fileScanner.next());
+          fileScanner.next();
+          while (fileScanner.hasNextInt() != true)
+            fileScanner.next();           
+          quantity = fileScanner.nextInt();
+          enterItem(itemNum, quantity);
+          fileScanner.next();
+        }
+    }
+    
+    public void makeDailyReport(String date) {
+        sale = new Sale();
+        receipt = new ArrayList<>();
+
+        receipt.add(String.format("%-28s %s\n", "Daily Report", date));
+        receipt.add(String.format(receiptItemFormat, 
+                "Item ID", "Description", "Quantity", "Cost"));
+        receipt.add(String.format(receiptItemFormat, 
+                "-------", "-----------", "--------", "----"));
     }
 }

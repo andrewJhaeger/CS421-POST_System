@@ -9,12 +9,13 @@ public class Sale {
     private Calendar calendar;
     private boolean isComplete;
     private Payment payment;
+    private boolean isDailyReport;
     
     public Sale() {
         lineItems = new ArrayList<>();
         calendar = Calendar.getInstance();
         isComplete = false;
-        
+        isDailyReport = false;
         File receiptNums = new File("receiptNumbers.txt");
         String line;
         String[] numbers;
