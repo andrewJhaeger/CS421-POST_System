@@ -140,7 +140,12 @@ public class Register {
             ex.printStackTrace(System.out);
         }
     }
-    
+    /**
+     * Checks to make sure date is in correct format for daily report
+     * 
+     * @param date
+     * @return boolean
+     */
     public boolean isValidDate(String date) {
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yy");
         
@@ -158,7 +163,12 @@ public class Register {
         }
         return true;
     }
-    
+    /**
+     * Looks for and prints out the daily report for a given day
+     * 
+     * @param date
+     * @throws IOException 
+     */
     public void printSalesReport(String date) throws IOException {
         makeDailyReport(date);
         File dir = new File ("receipts/" + date + "/");
@@ -170,6 +180,14 @@ public class Register {
         endSale();
     }
     
+    /**
+     * Reads in the data from a receipt to create a new sale item to add all
+     * the items into one sale, completing he daily report
+     * 
+     * @param receipt
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public void readFromReceipt(File receipt) throws FileNotFoundException, IOException {
         Scanner fileScanner = new Scanner(new BufferedReader(new FileReader(receipt))).useDelimiter("\\s{2,}");
         int itemNum;
@@ -187,7 +205,10 @@ public class Register {
           fileScanner.next();
         }
     }
-    
+    /**
+     * Prints out the headers for the daily report.
+     * @param date 
+     */
     public void makeDailyReport(String date) {
         sale = new Sale();
         receipt = new ArrayList<>();

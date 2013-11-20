@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.*;
 
+
 public class SalesReportDisplay {
     private Register register;
 
@@ -67,12 +68,14 @@ public class SalesReportDisplay {
 
         window.addWindowListener(new WindowListener() {
             @Override
+  
             public void windowClosing(WindowEvent e) {
                 window.dispose();
                 fromWindow.setVisible(true);
             }
 
             @Override
+            
             public void windowOpened(WindowEvent e) {
               info.setEditable(false);
               info.setFont(new Font("Courier New", Font.PLAIN, 12));
@@ -105,6 +108,9 @@ public class SalesReportDisplay {
     private void bindButtons() {
         runReport.addActionListener(new ActionListener(){
             @Override
+            /**
+             * Grabs date and prints out daily report for that date
+             */
             public void actionPerformed(ActionEvent e) {
                 if (register.isValidDate(date.getText()) == false)
                     JOptionPane.showMessageDialog(null, "Invalid date format or date, use MM-dd-yy!");
@@ -119,7 +125,9 @@ public class SalesReportDisplay {
             }
         });
     }
-    
+    /**
+     * Prints the sale item that is made of the combined receipts
+     */
      public void printReceipt() {
         info.setText("");
         for(String line : register.getReceipt()) {
