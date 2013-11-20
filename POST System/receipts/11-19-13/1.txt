@@ -1,14 +1,15 @@
-Receipt No. 1                11/19/13 12:18 AM
+Receipt No. 1                11/19/13 09:02 PM
 
 Item ID    Description     Quantity   Cost      
 -------    -----------     --------   ----      
-113        taco            3          $5.37     
-115        beef jerky      6          $17.94    
-109        pizza           8          $40.00    
+104        soda            5          $6.45     
+115        beef jerky      2          $5.98     
+107        popcorn         1          $1.50     
+112        gatorade        4          $5.96     
 ---------------------------------------------
-                             Subtotal: $63.31
-                              Tax (6%): $3.80
-                                Total: $67.11
-                      Tendered Amount: $70.00
-                                Change: $2.89
+                             Subtotal: $19.89
+                              Tax (6%): $1.19
+                                Total: $21.08
+                      Tendered Amount: $25.00
+                                Change: $3.92
                                    Thank You!

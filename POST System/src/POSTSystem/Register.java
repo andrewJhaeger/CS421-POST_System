@@ -12,8 +12,8 @@ public class Register {
     private String receiptBottomFormat;
     
     public Register(ProductCatalog inCatalog) {
-        receiptItemFormat = "%-10s %-15s %-10s %-10s\n";
-        receiptBottomFormat = "%45s\n";
+        receiptItemFormat = "%-10s %-15s %-10s %-10s";
+        receiptBottomFormat = "%45s";
         catalog = inCatalog;
     }
     
@@ -23,7 +23,7 @@ public class Register {
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy hh:mm a");
 
-        receipt.add(String.format("%-28s %s\n\n", "Receipt No. " + sale.getReceiptNumber(), dateFormat.format(getDate().getTime())));
+        receipt.add(String.format("%-28s %s\n", "Receipt No. " + sale.getReceiptNumber(), dateFormat.format(getDate().getTime())));
         receipt.add(String.format(receiptItemFormat, 
                 "Item ID", "Description", "Quantity", "Cost"));
         receipt.add(String.format(receiptItemFormat, 
@@ -105,7 +105,7 @@ public class Register {
     }
     
     public void endSale() {
-        receipt.add("---------------------------------------------\n");
+        receipt.add("---------------------------------------------");
         receipt.add(String.format(receiptBottomFormat, "Subtotal: " + sale.getTotal().stringValue()));
         Money money = new Money(sale.getTotal());
         money.multiply(0.06);
@@ -130,6 +130,7 @@ public class Register {
         try(FileWriter writer = new FileWriter(receiptFile, true)) {
             for(String line : receipt) {
                 writer.write(line);
+                writer.write(System.getProperty("line.separator"));
             }
         }
         catch(IOException ex) {

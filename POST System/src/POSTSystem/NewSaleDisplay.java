@@ -217,6 +217,7 @@ public class NewSaleDisplay {
         info.setText("");
         for(String line : register.getReceipt()) {
             info.append(line);
+            info.append("\n");
         }
     }
 }
