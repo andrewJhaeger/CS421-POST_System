@@ -171,7 +171,7 @@ public class Register {
     }
     
     public void readFromReceipt(File receipt) throws FileNotFoundException, IOException {
-        Scanner fileScanner = new Scanner(new BufferedReader(new FileReader(receipt)));
+        Scanner fileScanner = new Scanner(new BufferedReader(new FileReader(receipt))).useDelimiter("\\s{2,}");
         int itemNum;
         int quantity;
         
@@ -181,9 +181,7 @@ public class Register {
         
         while (!fileScanner.hasNext("---------------------------------------------")) {
           itemNum = Integer.parseInt(fileScanner.next());
-          fileScanner.next();
-          while (fileScanner.hasNextInt() != true)
-            fileScanner.next();           
+          fileScanner.next();           
           quantity = fileScanner.nextInt();
           enterItem(itemNum, quantity);
           fileScanner.next();
