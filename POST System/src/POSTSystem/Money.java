@@ -3,6 +3,10 @@ package POSTSystem;
 import java.math.BigDecimal;
 import java.text.*;
 
+/**
+ * Class to represent monetary values. Uses BigDecimal as a base value, the
+ * most reliable for money from what I've read. 
+ */
 public class Money {
     private BigDecimal value;
     
@@ -25,11 +29,6 @@ public class Money {
     public void multiply(double multiple) {
         BigDecimal bdMultiple = new BigDecimal(Double.toString(multiple));
         value = value.multiply(bdMultiple);
-    }
-    
-    public void divide(int divisor) {
-        BigDecimal bdDivisor = new BigDecimal(Integer.toString(divisor));
-        value = value.divide(bdDivisor);
     }
     
     public BigDecimal bigDecValue() {

@@ -3,9 +3,11 @@ package POSTSystem;
 import java.util.*;
 import java.text.*;
 import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+/**
+ * This class serves as a controller between the GUI and the processing
+ * side of the POST system.
+ */
 public class Register {
     private Sale sale;
     private ProductCatalog catalog;
@@ -13,12 +15,22 @@ public class Register {
     private String receiptItemFormat;
     private String receiptBottomFormat;
     
+    /**
+     * Defines format strings for receipt output and accepts a given 
+     * product catalog.
+     * @param inCatalog 
+     */
     public Register(ProductCatalog inCatalog) {
         receiptItemFormat = "%-10s %-15s %-10s %-10s";
         receiptBottomFormat = "%45s";
         catalog = inCatalog;
     }
     
+    /**
+     * Initializes a new Sale object and receipt for a new sale to be processed. 
+     * The receipt is an ArrayList of Strings and is updated in real time 
+     * so it can be displayed to the user while being processed.
+     */
     public void makeNewSale() {
         sale = new Sale();
         receipt = new ArrayList<>();
@@ -32,10 +44,38 @@ public class Register {
                 "-------", "-----------", "--------", "----"));
     }
     
+     /**
+     * Initializes a Sale object to be used as a ledger for the total items
+     * and cost of items sold over a certain day.
+     * @param date 
+     */
+    public void makeDailyReport(String date) {
+        sale = new Sale();
+        receipt = new ArrayList<>();
+
+        receipt.add(String.format("%-28s %s\n", "Daily Report", date));
+        receipt.add(String.format(receiptItemFormat, 
+                "Item ID", "Description", "Quantity", "Cost"));
+        receipt.add(String.format(receiptItemFormat, 
+                "-------", "-----------", "--------", "----"));
+    }
+    
+    /**
+     * Used to retrieve the date and time of the active sale.
+     * @return The date of the active sale.
+     */
     public Calendar getDate() {
         return sale.getDate();
     }
     
+    /**
+     * Used to enter an item into the sale. First retrieves the product
+     * specification of the desired item, then adds a line item to the sale.
+     * Also checks for already existing items in the sale, and adds to their
+     * quantity instead of adding a duplicate line item.
+     * @param itemID
+     * @param quantity 
+     */
     public void enterItem(int itemID, int quantity) {
         ProductSpecification spec = catalog.getProductSpec(itemID);        
         List<SalesLineItem> lineItems = sale.getLineItems();
@@ -71,6 +111,11 @@ public class Register {
                             lineItem.getSubTotal().stringValue()));
     }
     
+    /**
+     * Removes an item from the sale by itemID. Also removes its line from 
+     * the receipt.
+     * @param itemID 
+     */
     public void removeItem(int itemID) {
         List<SalesLineItem> lineItems = sale.getLineItems();
         int itemIndex = -1;
@@ -97,15 +142,10 @@ public class Register {
         receipt.remove(receiptIndex);
     }
     
-    public void makePayment(Money tenderedAmt) {
-        sale.makePayment(tenderedAmt);
-        sale.becomeComplete();
-        receipt.add(String.format(receiptBottomFormat, "Tendered Amount: " + tenderedAmt.stringValue()));
-        receipt.add(String.format(receiptBottomFormat, "Change: " + sale.getChange().stringValue()));
-        receipt.add(String.format(receiptBottomFormat, "Thank You!"));
-        writeReceiptToFile();
-    }
-    
+    /**
+     * Ends the the sale after all items have been entered. Calculates the 
+     * subtotal, tax, and total, then adds them to the receipt. 
+     */
     public void endSale() {
         receipt.add("---------------------------------------------");
         receipt.add(String.format(receiptBottomFormat, "Subtotal: " + sale.getTotal().stringValue()));
@@ -116,10 +156,32 @@ public class Register {
         receipt.add(String.format(receiptBottomFormat, "Total: " + money.stringValue()));
     }
     
+    /**
+     * Creates a payment from the tendered amount and completes the sale. 
+     * Then adds final lines to receipt and writes the receipt to an external file.
+     * @param tenderedAmt 
+     */
+    public void makePayment(Money tenderedAmt) {
+        sale.makePayment(tenderedAmt);
+        sale.becomeComplete();
+        receipt.add(String.format(receiptBottomFormat, "Tendered Amount: " + tenderedAmt.stringValue()));
+        receipt.add(String.format(receiptBottomFormat, "Change: " + sale.getChange().stringValue()));
+        receipt.add(String.format(receiptBottomFormat, "Thank You!"));
+        writeReceiptToFile();
+    }
+    
+    /**
+     * Returns the receipt.
+     * @return 
+     */
     public List<String> getReceipt() {
         return receipt;
     }
     
+    /**
+     * Writes the receipt to a text file  in a directory according to the date
+     * the file was created. The file is named by its receipt number.
+     */
     private void writeReceiptToFile() {         
         SimpleDateFormat folderDateFormat = new SimpleDateFormat("MM-dd-yy");
         File dir = new File("receipts/" + folderDateFormat.format(getDate().getTime()));
@@ -140,6 +202,7 @@ public class Register {
             ex.printStackTrace(System.out);
         }
     }
+    
     /**
      * Checks to make sure date is in correct format for daily report
      * 
@@ -173,8 +236,8 @@ public class Register {
         makeDailyReport(date);
         File dir = new File ("receipts/" + date + "/");
         if (dir.isDirectory()) {            
-           for (File receipts : dir.listFiles()) {
-               readFromReceipt(receipts);
+           for (File receiptFile : dir.listFiles()) {
+               readItemsFromReceipt(receiptFile);
            }
         }
         endSale();
@@ -188,8 +251,8 @@ public class Register {
      * @throws FileNotFoundException
      * @throws IOException 
      */
-    public void readFromReceipt(File receipt) throws FileNotFoundException, IOException {
-        Scanner fileScanner = new Scanner(new BufferedReader(new FileReader(receipt))).useDelimiter("\\s{2,}");
+    public void readItemsFromReceipt(File receiptFile) throws FileNotFoundException, IOException {
+        Scanner fileScanner = new Scanner(new BufferedReader(new FileReader(receiptFile))).useDelimiter("\\s{2,}");
         int itemNum;
         int quantity;
         
@@ -204,19 +267,5 @@ public class Register {
           enterItem(itemNum, quantity);
           fileScanner.next();
         }
-    }
-    /**
-     * Prints out the headers for the daily report.
-     * @param date 
-     */
-    public void makeDailyReport(String date) {
-        sale = new Sale();
-        receipt = new ArrayList<>();
-
-        receipt.add(String.format("%-28s %s\n", "Daily Report", date));
-        receipt.add(String.format(receiptItemFormat, 
-                "Item ID", "Description", "Quantity", "Cost"));
-        receipt.add(String.format(receiptItemFormat, 
-                "-------", "-----------", "--------", "----"));
     }
 }
