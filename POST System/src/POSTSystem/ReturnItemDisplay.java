@@ -97,6 +97,7 @@ public class ReturnItemDisplay {
 
       @Override
       public void windowOpened(WindowEvent e) {
+          receiptInfo.setFont(new Font("Courier New", Font.PLAIN, 12));
       }
 
       @Override
@@ -163,15 +164,14 @@ public class ReturnItemDisplay {
     int counter = 0;
     listModel.clear();
 
-    if (listModel.isEmpty()) {
-      JOptionPane.showMessageDialog(null, "Receipt is invalid");
-    }
-
     for (String line : register.getReceipt()) {
       if (counter > 2) {
         listModel.addElement(line);
       }
       counter += 1;
+    }
+    if (listModel.isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Receipt is invalid");
     }
   }
 }
