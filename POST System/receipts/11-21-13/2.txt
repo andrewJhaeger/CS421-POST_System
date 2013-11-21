@@ -1,14 +1,13 @@
-Receipt No. 2                11/21/13 12:27 AM
+Receipt No. 2                11/21/13 12:43 AM
 
 Item ID    Description     Quantity   Cost      
 -------    -----------     --------   ----      
 106        bottle_water    8          $7.12     
-104        soda            2          $2.58     
 101        4 hour energy   3          $11.94    
 ---------------------------------------------
-                             Subtotal: $21.64
-                              Tax (6%): $1.30
-                                Total: $22.94
+                             Subtotal: $19.06
+                              Tax (6%): $1.14
+                                Total: $20.20
                       Tendered Amount: $70.00
-                               Change: $47.06
+                               Change: $49.80
                                    Thank You!
