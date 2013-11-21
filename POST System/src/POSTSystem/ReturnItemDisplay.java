@@ -148,8 +148,9 @@ public class ReturnItemDisplay {
         int itemId = Integer.parseInt(id.substring(0, 3));
         register.removeItem(itemId);
         register.endSale();
-        register.calcTotals();
-        register.makePayment(amounts[0]);
+        JOptionPane.showMessageDialog(null, 
+                        "You have successfully returned your item");
+        register.makePayment(amounts[0], true);
 
         window.dispose();
         fromWindow.setVisible(true);

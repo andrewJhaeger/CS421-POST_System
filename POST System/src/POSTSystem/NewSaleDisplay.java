@@ -197,7 +197,7 @@ public class NewSaleDisplay {
         } else if (completeSale.getText().equals("Make Payment")) {
           try {
             Money payment = new Money(itemCode.getText());
-            register.makePayment(payment);
+            register.makePayment(payment, false);
             cancelSale.setEnabled(false);
             completeSale.setText("Close");
           } catch (Exception ex) {

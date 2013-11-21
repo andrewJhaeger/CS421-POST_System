@@ -177,9 +177,13 @@ public class Register {
    *
    * @param tenderedAmt
    */
-  public void makePayment(Money tenderedAmt) {
+  public void makePayment(Money tenderedAmt, boolean isReturn) {
     sale.makePayment(tenderedAmt);
-    sale.becomeComplete();
+    
+    if(!isReturn) {
+      sale.becomeComplete();
+    }
+    
     receipt.add(String.format(receiptBottomFormat, "Tendered Amount: " 
             + tenderedAmt.stringValue()));
     receipt.add(String.format(receiptBottomFormat, "Change: " 
@@ -351,11 +355,5 @@ public class Register {
     oldAmounts[0] = oldTendered;
     oldAmounts[1] = oldTotal;
     return oldAmounts;
-  }
-
-  public void calcTotals() {
-
-    JOptionPane.showMessageDialog(null, 
-            "You have successfully returned your item");
   }
 }
