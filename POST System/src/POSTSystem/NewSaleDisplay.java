@@ -104,7 +104,7 @@ public class NewSaleDisplay {
               info.setEditable(false);
               info.setFont(new Font("Courier New", Font.PLAIN, 12));
 
-              register.makeNewSale();
+              register.makeNewSale(-1);
               printReceipt();
 
               Calendar calendar = register.getDate();

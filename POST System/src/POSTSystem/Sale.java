@@ -98,6 +98,10 @@ public class Sale {
         return receiptNumber;
     }
     
+    public void setReceiptNumber(int receiptNum) {
+        receiptNumber = receiptNum;
+    }
+    
     /**
      * Returns the total cost of the purchased items in the sale.
      * @return The total cost of the purchased items in the sale.

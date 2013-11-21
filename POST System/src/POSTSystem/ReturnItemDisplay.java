@@ -7,6 +7,7 @@ import javax.swing.border.*;
 
 public class ReturnItemDisplay {
     private Register register;
+    private Money[] amounts;
     
     private JFrame window = new JFrame();
     private JPanel mainPanel = new JPanel();
@@ -19,7 +20,8 @@ public class ReturnItemDisplay {
     private JLabel receiptLabel = new JLabel("Receipt Number:  ");
     private JTextField receiptNumber = new JTextField();
     private JButton findButton = new JButton("Find Receipt");
-    private JList receiptInfo = new JList();
+    private DefaultListModel listModel = new DefaultListModel();
+    private JList receiptInfo = new JList(listModel);
     //  private JScrollPane receiptInfo = new JScrollPane(info, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     private JButton returnItem = new JButton("Return Selected Item");
 
@@ -103,19 +105,54 @@ public class ReturnItemDisplay {
         window.setVisible(true);
     }
 
-    private void bindButtons() {
+    private void bindButtons() {               
         findButton.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
-
+            public void actionPerformed(ActionEvent e) {       
+                try {
+                    amounts = register.removeItemFromReceipt(receiptNumber.getText());
+                    printReceipt();
+                }
+                catch(Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Receipt is invalid");
+                }
             }
         });
 
         returnItem.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                String id = listModel.getElementAt(receiptInfo.getSelectedIndex()).toString();
+                int itemId = Integer.parseInt(id.substring(0,3));
+                register.removeItem(itemId); 
+                register.endSale();    
+                register.calcTotals();
+                register.makePayment(amounts[0]);
+                
+                window.dispose();
+                fromWindow.setVisible(true);
             }
         });
     }
+    
+    /**
+     * Prints the receipt items
+     */    
+    public void printReceipt() {
+        int counter = 0;
+        listModel.clear();  
+        
+        if (listModel.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Receipt is invalid");
+        }
+        
+        for(String line : register.getReceipt()) { 
+            if (counter > 2) {
+                listModel.addElement(line);
+            }                        
+            counter += 1;
+        }
+    }
+    
+    
 }

@@ -3,6 +3,7 @@ package POSTSystem;
 import java.util.*;
 import java.text.*;
 import java.io.*;
+import javax.swing.JOptionPane;
 
 /**
  * This class serves as a controller between the GUI and the processing
@@ -31,9 +32,13 @@ public class Register {
      * The receipt is an ArrayList of Strings and is updated in real time 
      * so it can be displayed to the user while being processed.
      */
-    public void makeNewSale() {
+    public void makeNewSale(int registerNum) {
         sale = new Sale();
         receipt = new ArrayList<>();
+        
+        if (registerNum != -1) {
+            sale.setReceiptNumber(registerNum);
+        }
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy hh:mm a");
 
@@ -161,7 +166,7 @@ public class Register {
      * Then adds final lines to receipt and writes the receipt to an external file.
      * @param tenderedAmt 
      */
-    public void makePayment(Money tenderedAmt) {
+    public void makePayment(Money tenderedAmt) {        
         sale.makePayment(tenderedAmt);
         sale.becomeComplete();
         receipt.add(String.format(receiptBottomFormat, "Tendered Amount: " + tenderedAmt.stringValue()));
@@ -185,13 +190,13 @@ public class Register {
     private void writeReceiptToFile() {         
         SimpleDateFormat folderDateFormat = new SimpleDateFormat("MM-dd-yy");
         File dir = new File("receipts/" + folderDateFormat.format(getDate().getTime()));
-        
         if(!dir.exists()) {
             dir.mkdirs();
         }
-        File receiptFile = new File(dir, sale.getReceiptNumber() + ".txt");
-    
-        try(FileWriter writer = new FileWriter(receiptFile, true)) {
+        
+        File receiptFile = new File(dir, sale.getReceiptNumber() + ".txt");  
+        
+        try(FileWriter writer = new FileWriter(receiptFile, false)) {
             for(String line : receipt) {
                 writer.write(line);
                 writer.write(System.getProperty("line.separator"));
@@ -268,4 +273,72 @@ public class Register {
           fileScanner.next();
         }
     }
+  
+    /**
+     * Reads in the data from a receipt to print out the items
+     * in a list so the user can return an item
+     * 
+     * @param receiptNumber
+     * @return Money[]
+     */
+    public Money[] removeItemFromReceipt(String receiptNumber) {
+        File dir = new File("receipts");
+        Money oldTotal = new Money("0");
+        Money oldTendered = new Money("0");
+        Money[] oldAmounts = new Money[2];
+        
+        String line;
+        String[] lineVars;   
+                
+        makeNewSale(Integer.parseInt(receiptNumber));            
+        
+        try {
+           for(File subDir : dir.listFiles()) {
+               if (subDir.isDirectory()) {
+                   for (File file : subDir.listFiles()) {
+                       if(file.getName().equals(receiptNumber + ".txt")) {  //If the file matches the receipt number
+                           BufferedReader br = new BufferedReader(new FileReader(file));
+                           while((line = br.readLine()) != null) {
+                               if(line.startsWith("1")) {  //If we are at the first item line
+                                   while(!line.startsWith("-")) {  //While we are not at the end of the sale items
+                                       lineVars = line.split("\\s{2,}");
+                                       enterItem(Integer.parseInt(lineVars[0]), Integer.parseInt(lineVars[2]));
+                                       line = br.readLine();
+                                   }  
+                               }
+                               else {
+                                   if(line.contains("Total:")) {
+                                       String oldTotalString = line.replace("Total: $", "").trim();                                       
+                                       oldTotal = new Money(oldTotalString);
+                                       sale.getTotal().subtract(oldTotal);
+                                   }
+                                   
+                                   if(line.contains("Tendered Amount:")) {
+                                       String oldTenderedString = line.replace("Tendered Amount: $", "").trim();                                       
+                                       oldTendered = new Money(oldTenderedString);
+                                       sale.getTotal().subtract(oldTendered);                                       
+                                   }
+                               }                                  
+                           }
+                           br.close();
+                       }
+                   }
+               }
+           }
+       }
+       catch(Exception ex) {
+               System.out.println("An error occured retrieving the receipt files.");
+               ex.printStackTrace(System.out);
+       }
+        
+       oldAmounts[0] = oldTendered;
+       oldAmounts[1] = oldTotal;
+       return oldAmounts;
+    }
+    
+    public void calcTotals() {  
+
+        JOptionPane.showMessageDialog(null, "You have successfully returned your item");
+    }
+  
 }
