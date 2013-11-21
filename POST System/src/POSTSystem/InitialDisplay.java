@@ -5,6 +5,9 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
+/**
+ * This class defines the initial GUI that will be displayed to the user.
+ */
 public class InitialDisplay {
     private Register register;
 
@@ -17,7 +20,11 @@ public class InitialDisplay {
     private JButton newSale = new JButton("New Sale");
     private JButton returnItem = new JButton("Return Item");
     private JButton salesReport = new JButton("Daily Sales Report");
-  
+    
+    /**
+     * Start the process of creating the initial GUI.
+     * @param inRegister 
+     */
     public InitialDisplay(Register inRegister) {
         register = inRegister;
         
@@ -26,7 +33,11 @@ public class InitialDisplay {
         displayWindow();
         bindButtons();
     }
-  
+    
+    /**
+     * Set the layouts of the different panels on the form to properly
+     * arrange the elements on the GUI.
+     */
     private void setLayouts() {
         mainPanel.setLayout(new GridLayout(2, 1, 5, 5));
         titlePanel.setLayout(new FlowLayout());
@@ -36,7 +47,11 @@ public class InitialDisplay {
         Font label = new Font("Dialog", Font.BOLD, 24);
         title.setFont(label);
     }
-  
+    
+    /**
+     * Add the different elements to their respective panels and then
+     * add the different panels to the main panel.
+     */
     private void addElements() {
         titlePanel.add(title);
         buttonPanel.add(newSale);
@@ -46,7 +61,11 @@ public class InitialDisplay {
         mainPanel.add(buttonPanel);
         window.add(mainPanel);
     }
-  
+    
+    /**
+     * Make the window visible, set the title and size of the window,
+     * set it's location on the screen and the action of the "X" button.
+     */
     private void displayWindow() {
         window.setSize(500, 175);
         window.setTitle("POST System");
@@ -54,12 +73,15 @@ public class InitialDisplay {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setVisible(true);
     }
-  
+    
+    /**
+   * Bind action listeners to the buttons on the GUI.
+   */
     private void bindButtons() {
         newSale.addActionListener(new ActionListener(){
           @Override
           public void actionPerformed(ActionEvent e) {
-            NewSaleDisplay temp2 = new NewSaleDisplay(window, register);
+            NewSaleDisplay newSale = new NewSaleDisplay(window, register);
             window.setVisible(false);
           }
       });
@@ -67,7 +89,8 @@ public class InitialDisplay {
         returnItem.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-              ReturnItemDisplay temp3 = new ReturnItemDisplay(window, register);
+              ReturnItemDisplay returnItem 
+                      = new ReturnItemDisplay(window, register);
               window.setVisible(false);
             }
         });
@@ -75,7 +98,8 @@ public class InitialDisplay {
         salesReport.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-              SalesReportDisplay temp4 = new SalesReportDisplay(window, register);
+              SalesReportDisplay salesReport 
+                      = new SalesReportDisplay(window, register);
               window.setVisible(false);
             }
         });
