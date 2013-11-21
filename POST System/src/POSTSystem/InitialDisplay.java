@@ -22,7 +22,7 @@ public class InitialDisplay {
     private JButton returnItem = new JButton("Return Item");
     private JButton salesReport = new JButton("Daily Sales Report");
     private JTextArea message = new JTextArea("This program uses persistance!  " 
-            + "You MUST have the receiptNumbers.txt file in this applications " 
+            + "You MUST have the receiptNumbers.txt file in this application's " 
             + "directory in order to use this program.");
     
     /**
